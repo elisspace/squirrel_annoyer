@@ -25,15 +25,28 @@ from pytz import timezone
 # ==========================
 # Configuration
 # ==========================
-load_dotenv("/home/eli/git/scripts/squirrel_anoyer/.env")
+load_dotenv("/home/eli/git/squirrel_annoyer/.env")
 CAMERA_IP = os.getenv("CAMERA_IP")
 CAMERA_USER = os.getenv("CAMERA_USER")
 CAMERA_PASS = os.getenv("CAMERA_PASS")
+DATA_FOLDER = os.getenv("OUTPUT_BASE_LOCATION")
 CAPTURE_INTERVAL = 60  # seconds between captures
-DATA_FOLDER = "C:\\Users\\PC\\squirreldata"
 IMAGES_FOLDER = os.path.join(DATA_FOLDER, "images")
 POSITIVE_DETECTION_FOLDER = os.path.join(IMAGES_FOLDER, "positive_detection")
 LOG_FILE = os.path.join(DATA_FOLDER, "log.txt")
+
+
+# ==========================
+# Set up output directory locally
+# ==========================
+# create new directory for each run/restart
+#
+# set base in .env file
+date_str = datetime.now().strftime("%Y-%m-%d")
+OUTPUT_LOCATION= os.path.join(DATA_FOLDER, date_str)
+os. makedirs(OUTPUT_LOCATION, exist_ok=True)
+print("Writng files to", OUTPUT_LOCATION)
+
 
 # MQTT Configuration
 MQTT_BROKER = os.getenv("MQTT_BROKER")  
@@ -49,7 +62,8 @@ urllib3.disable_warnings() # disable HTTPS cert warnings. See:https://urllib3.re
 DEBUG_DEFAULT = False
 
 # Crop coordinates (left, top, right, bottom) 
-CROP_COORDS = (1700, 375, 2000, 812)  
+CROP_COORDS = (1440, 370, 2040, 770) # left and right feeders
+# CROP_COORDS = (1700, 375, 2000, 812) #right feeder only
 
 # ==========================
 # Setup
